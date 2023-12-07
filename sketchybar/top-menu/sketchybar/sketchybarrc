@@ -1,0 +1,89 @@
+## Hotloading
+sketchybar --hotload 1
+
+## Helper Script
+HELPER=com.bobbyl140.sketchybar.helper
+killall helper
+~/.config/sketchybar/scripts/helper $HELPER > /dev/null 2>&1 &
+
+## Defaults
+sketchybar --default background.height=24 background.color=0x00000000 background.border_color=0xffffffff background.border_width=0 background.drawing=0
+sketchybar --default icon.background.height=24 icon.color=0xff000000 icon.background.color=0xffffffff icon.border_width=0 icon.background.drawing=0
+sketchybar --default label.border_width=0 label.background.drawing=0 label.scroll_texts=1 scroll_texts=1
+sketchybar --default update_freq=1
+
+## Bar Properties
+sketchybar --bar height=38 position=top color=0x00000000 border_width=0 corner_radius=0 margin=-12 topmost=window notch_width=230
+
+## Screen Corner Padding
+sketchybar --add item spacer-0-left left
+sketchybar --set spacer-0-left background.drawing=0 width=20
+sketchybar --add item spacer-0-right right
+sketchybar --set spacer-0-right background.drawing=0 width=20
+
+## Clock
+sketchybar --add item clock left
+sketchybar --set clock padding_right=5 background.drawing=1 icon.background.drawing=1 icon="􀐫" icon.color=0xff000000 icon.padding_left=4 icon.padding_right=5 background.border_width=1 label.padding_left=5 label.padding_right=5 background.color=0x77000000 label.font.size=12.5
+~/.config/sketchybar/scripts/clock &
+
+## System Tray Icon
+sketchybar --add item system-icon right
+sketchybar --set system-icon icon="􁈸" background.drawing=1 icon.background.drawing=1 icon.padding_left=1 icon.padding_right=3
+
+## System Tray Items
+sketchybar --add alias "Control Center,Battery" right
+sketchybar --set "Control Center,Battery" padding_left=4 padding_right=2
+sketchybar --add alias "Ethernet Status,Item-0" right
+sketchybar --set "Ethernet Status,Item-0" padding_left=2 padding_right=-5
+sketchybar --add alias "Control Center,WiFi" right
+sketchybar --set "Control Center,WiFi" padding_left=2 padding_right=-5
+sketchybar --add alias "Control Center,Bluetooth" right
+sketchybar --set "Control Center,Bluetooth" padding_left=0 padding_right=-3
+sketchybar --add alias "Control Center,AirDrop" right
+sketchybar --set "Control Center,AirDrop" padding_left=3 padding_right=-4
+sketchybar --add alias "Control Center,Sound" right
+sketchybar --set "Control Center,Sound" padding_left=-5 padding_right=-5
+sketchybar --add alias "Control Center,FocusModes" right
+sketchybar --set "Control Center,FocusModes" padding_left=2 padding_right=1
+
+## System Tray Container
+sketchybar --add bracket system system-icon "Control Center,Battery" "Ethernet Status,Item-0" "Control Center,WiFi" "Control Cenfter,Bluetooth" "Control Center,AirDrop" "Control Center,Sound" "Control Center,FocusModes"
+sketchybar --set system background.border_width=1 background.drawing=1 background.color=0x77000000
+
+# Space Between Trays
+sketchybar --add item spacer-1 right
+sketchybar --set spacer-1 background.drawing=0 width=5
+
+## Network Tray Icon
+sketchybar --add item network-icon right
+sketchybar --set network-icon icon="􀌙" background.drawing=1 icon.background.drawing=1 icon.padding_left=2 icon.padding_right=3
+
+## Network Tray Items
+sketchybar --add alias "Tailscale,Item-0" right
+sketchybar --set "Tailscale,Item-0" padding_left=-6 padding_right=2
+sketchybar --add alias "Little Snitch Agent,Item-0" right
+sketchybar --set "Little Snitch Agent,Item-0" padding_left=0 padding_right=0
+
+## Network Tray Container
+sketchybar --add bracket network network-icon "Tailscale,Item-0" "Little Snitch Agent,Item-0"
+sketchybar --set network background.border_width=1 background.padding_left=10 icon.background.padding_left=10 background.drawing=1 background.color=0x77000000
+
+## Music
+sketchybar --add event song_update com.apple.iTunes.playerInfo
+sketchybar --add item music-icon q
+sketchybar --set music-icon icon="􀊆" click_script="open /System/Applications/Music.app" background.drawing=1 icon.background.drawing=1 icon.padding_left=3 icon.padding_right=3
+sketchybar --add item music-song q
+sketchybar --set music-song label="Not playing." click_script="open /System/Applications/Music.app" label.max_chars=30
+sketchybar --set music-song icon.background.drawing=1 icon.padding_left=4 icon.padding_right=5 background.border_width=1 label.padding_left=5 label.padding_right=6 icon.color=0x0000000 icon.background.color=0x00000000 icon.border_width=0 icon.width=0 label.background.drawing=0 icon.background.drawing=0 icon.drawing=0
+sketchybar --set music-song drawing=1 script="~/.config/sketchybar/scripts/music.sh"
+sketchybar --subscribe music-song song_update
+sketchybar --add bracket music music-song music-icon
+sketchybar --set music click_script="open /System/Applications/Music.app" scroll_texts=1 background.drawing=1 background.border_width=1 background.color=0x77000000 icon.color=0x0000000 icon.background.color=0x00000000 icon.border_width=0 icon.width=0 label.background.drawing=0 label.drawing=0 icon.background.drawing=0 icon.drawing=0
+
+## Weather
+sketchybar --add item weather e
+sketchybar --set weather background.drawing=1 icon.background.drawing=1 icon.padding_left=4 icon.padding_right=5 background.border_width=1 label.padding_left=5 label.padding_right=6 update_freq=600 background.color=0x77000000
+sketchybar --set weather drawing=1 script="~/.config/sketchybar/scripts/weather.sh" click_script="open /System/Applications/Weather.app"
+
+## Update Items
+sketchybar --update
